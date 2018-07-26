@@ -4,6 +4,8 @@
 
 const string prompt = "> ";
 const string result = "= ";
+
+double expon(Token_stream& ts)
 double statement(Token_stream& ts);
 double expression(Token_stream& ts);
 double term(Token_stream& ts);
@@ -38,6 +40,25 @@ double statement(Token_stream& ts){
     }
     ts.putback(t);
     return expression(ts);
+}
+
+double expon(Token_stream& ts)
+{
+/* grammar recognized:
+Exp:
+    Primary
+    Primary "^" Primary
+*/
+    double left = primary(ts);
+    Token t = ts.get();
+    if(t.kind == power) {
+        double d = primary(ts);
+        return pow(left, d);
+    }
+    else {
+        ts.putback(t);     // put t back into the token stream
+        return left;
+    }
 }
 
 double primary(Token_stream& ts){
@@ -79,36 +100,37 @@ double primary(Token_stream& ts){
 }
 double term(Token_stream& ts)
 {
-    double left = primary(ts);
-    Token t = ts.get();
+    double left = expon(ts);
+    Token t = ts.get();        // get the next token from token stream
+
     while(true) {
         switch (t.kind) {
-            case '*':
-                left *= primary(ts);
-                t = ts.get();
-                break;
-            case '/':
-            {
-                double d = primary(ts);
+        case '*':
+            left *= expon(ts);
+            t = ts.get();
+            break;
+        case '/':
+            {    
+                double d = expon(ts);
                 if (d == 0) error("divide by zero");
-                left /= d;
+                left /= d; 
                 t = ts.get();
                 break;
             }
-            case '%':
+        case '%':
             {
-                double d = primary(ts);
+                double d = expon(ts);
                 if (d == 0) error("divide by zero");
                 left = fmod(left, d);
                 t = ts.get();
                 break;
             }
-            default:
-                ts.putback(t);     // put t back into the token stream
-                return left;
+        default: 
+            ts.putback(t);     // put t back into the token stream
+            return left;
         }
     }
-    
+
 }
 double expression(Token_stream& ts){
     double left = term(ts);
