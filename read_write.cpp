@@ -29,6 +29,5 @@ int main()
         temps.push_back(Reading{hour,temp,pressure});
     }
     for (int i=0; i<temps.size(); ++i)
-        ost << temps[i].hour << " "
-              << temps[i].temp <<" "<<temps[i].pressure<<"\n";
+        ost << temps[i].hour << " "<< temps[i].temp <<" "<<temps[i].pressure<<"\n";
 }
