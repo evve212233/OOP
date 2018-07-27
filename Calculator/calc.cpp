@@ -170,7 +170,7 @@ void calculate(Token_stream& ts)
                 return;
             }
             ts.putback(t);
-            cout << result << statement(ts) << '\n';
+            cout<<setprecision(10)<< result << statement(ts) << '\n';
         }catch(exception& e) {
             cerr << e.what() << '\n';
             clean_up_mess();
