@@ -12,7 +12,7 @@ int main(){
 	today.add_day(20);
 	cout<<"Add 20 days to today:"<<today<<"\n";
 	Date new_date;
-	cout<<"Please enter new date\n>>";
+	cout<<"Please enter a date in format (YYYY,MM,DD)\n>>";
 	cin>>new_date;
 	cout<<"New date: "<<new_date<<"\n";
 	return 0;

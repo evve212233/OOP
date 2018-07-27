@@ -2,7 +2,7 @@
 #include "token.h"
 #include "vars.h"
 
-void Token_stream::putback(Token t){ 
+void Token_stream::putback(Token t){
     buffer.push_back(t);
 }
 
@@ -20,7 +20,7 @@ Token Token_stream::get(){
     char ch;
     cin >> ch;
     switch(ch){
-        case quit: case print: case '(': case '+': case '-': case '*': case '/': case ')': case '%': case '=': return Token{ch};
+        case quit: case print: case '(': case '+': case '-': case '*': case '/': case ')': case mod: case power: case '=': return Token{ch};
         case '0': case '1': case '2': case '3': case '4': case '5': case '6': case '7': case '8': case '9': case '.':{
             cin.putback(ch);// read more digit
             double val;
@@ -47,7 +47,7 @@ void Token_stream::ignore(char c)
         Token t = popback();
         if(t.kind == c) return;
     }
-    
+
     char ch = 0;
     while(cin>>ch)
         if(ch == c) return;
