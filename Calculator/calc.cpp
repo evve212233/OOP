@@ -5,7 +5,7 @@
 const string prompt = "> ";
 const string result = "= ";
 
-double expon(Token_stream& ts);
+double expon(Token_stream& ts)
 double statement(Token_stream& ts);
 double expression(Token_stream& ts);
 double term(Token_stream& ts);
@@ -110,10 +110,10 @@ double term(Token_stream& ts)
             t = ts.get();
             break;
         case '/':
-            {
+            {    
                 double d = expon(ts);
                 if (d == 0) error("divide by zero");
-                left /= d;
+                left /= d; 
                 t = ts.get();
                 break;
             }
@@ -125,7 +125,7 @@ double term(Token_stream& ts)
                 t = ts.get();
                 break;
             }
-        default:
+        default: 
             ts.putback(t);     // put t back into the token stream
             return left;
         }
@@ -153,6 +153,7 @@ double expression(Token_stream& ts){
     }
 //    t = ts.get();
 }
+
 void calculate(Token_stream& ts)
 {
     while(cin) {
@@ -175,7 +176,7 @@ void calculate(Token_stream& ts)
             clean_up_mess();
         }
     }
-
+    
 }
 
 int main()
