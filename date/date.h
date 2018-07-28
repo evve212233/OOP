@@ -7,6 +7,7 @@ enum class Day {
     monday, tuesday, wednesday, thursday, friday, saturday, sunday
 };
 
+const vector<string> month_names{"","January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 const vector<int> last_day{0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 const vector<int> leap_last_day{0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
@@ -30,7 +31,7 @@ private:
 ostream& operator << (ostream& os, const Date& d); //allow chaining of ostream eg. cout << x << y << z;
 
 istream& operator >> (istream& is, Date& dd); // allow user input y,m,d
-
+string longForm(Date d);
 bool operator == (const Date& d1, const Date& d2);
 bool operator != (const Date& d1, const Date& d2);
 bool leapYear(int y);
