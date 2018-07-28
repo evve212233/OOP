@@ -9,11 +9,24 @@ int main(){
 	cout<<"If same day:"<<(today==tomorrow)<<"\n";
 	cout<<"If different day:"<<(today!=tomorrow)<<"\n";//check bool op
 	cout<<"leap year: "<<leapYear(2012)<<"\n";//check leap year
-	today.add_day(20);
-	cout<<"Add 20 days to today:"<<today<<"\n";
+	today.add_day(400);
+	cout<<"Add 400 days to today:"<<today<<"\n";
 	Date new_date;
-	cout<<"Please enter a date in format (YYYY,MM,DD)\n>>";
-	cin>>new_date;
-	cout<<"New date: "<<new_date<<"\n";
+	cout<<"Please enter a new date in format (YYYY,MM,DD)\n>>";
+	while(cin){
+        try{
+            cin >> new_date;
+            break;
+        }catch(exception e){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            cout << "Enter again: \n";
+        }catch(Date::Invalid){
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            cout << "Enter again: \n";
+        }
+    }
+	cout<<"New date in long form: "<<longForm(new_date)<<"\n";
 	return 0;
 }
