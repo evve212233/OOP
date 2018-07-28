@@ -19,7 +19,10 @@ Date::Date() //set to default
 void Date::add_day(int n)
 {
     if (n<0) error("Invalid: cannot handle negative number");
+    if (!leapYear(y)){
     int curr=int(m);//current month
+    add_year(n/365);
+    n=n%365;
     d+=n;
     for (int i=1;i<13;i++){
         if (curr==i){
@@ -29,6 +32,22 @@ void Date::add_day(int n)
                 curr+=1;
             }
         }
+    }
+    }
+    else{
+    int curr=int(m);//current month
+    add_year(n/365);
+    n=n%365;
+    d+=n;
+    for (int i=1;i<13;i++){
+        if (curr==i){
+            if (leap_last_day[i]<d){
+                add_month(1);
+                d-=leap_last_day[i];
+                curr+=1;
+            }
+        }
+    }
     }
 }
 void Date::add_month(int n){
@@ -86,6 +105,11 @@ istream& operator >> (istream& is, Date& dd){
     }
     dd = Date{y, Month(m), d};
     return is;
+}
+
+string longForm(Date d){
+    string res= '('+month_names[d.month()]+','+to_string(d.day())+','+to_string(d.year())+')';
+    return res;
 }
 
 bool operator == (const Date& d1, const Date& d2){
