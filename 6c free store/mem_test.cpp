@@ -4,6 +4,8 @@ int main(){
 	while(true){
 		double* dptr=new double[10000];
 		cout<<"Loop"<<i<<endl;
+		cout<<"dptr[0]="<<dptr[0]<<endl;
 		i++;
+
 	}
 }
