@@ -1,11 +1,12 @@
 #include "std_lib_facilities.h"
 #include "token.h"
 #include "vars.h"
+#include "funcs.h"
 
 const string prompt = "> ";
 const string result = "= ";
 
-double expon(Token_stream& ts)
+double expon(Token_stream& ts);
 double statement(Token_stream& ts);
 double expression(Token_stream& ts);
 double term(Token_stream& ts);
@@ -78,8 +79,9 @@ double primary(Token_stream& ts){
             Token next_t = ts.get();
             if(next_t.kind == '(') {
                 double d = expression(ts);
-                t = ts.get();
-                if (t.kind != ')') error("')' expected");
+                next_t = ts.get();
+                if (next_t.kind != ')') error("')' expected");
+                d=exec_func(t.name,d);
                 return d;
             }
             else {
@@ -110,10 +112,10 @@ double term(Token_stream& ts)
             t = ts.get();
             break;
         case '/':
-            {    
+            {
                 double d = expon(ts);
                 if (d == 0) error("divide by zero");
-                left /= d; 
+                left /= d;
                 t = ts.get();
                 break;
             }
@@ -125,7 +127,7 @@ double term(Token_stream& ts)
                 t = ts.get();
                 break;
             }
-        default: 
+        default:
             ts.putback(t);     // put t back into the token stream
             return left;
         }
@@ -176,7 +178,7 @@ void calculate(Token_stream& ts)
             clean_up_mess();
         }
     }
-    
+
 }
 
 int main()
